@@ -1,0 +1,26 @@
+.greetings{
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+}
+
+.techsHeader {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 10px 5px;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.addTechs {
+  width: 25px;
+  height: 25px;
+}
+
+.techsContainer {
+  border: none;
+  border-radius: 3px;
+  background-color: var(--grey_3);
+  width: 780px;
+}

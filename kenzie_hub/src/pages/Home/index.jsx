@@ -2,20 +2,22 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Redirect } from "react-router-dom";
 import { useState, useEfect } from "react";
 import api from "../../services/api";
-// import { set } from "react-hook-form";
+import "./style.css";
+import TechModal from "../../components/Modal";
 
-function Home({ name, modulo, authenticated }) {
+function Home({ authenticated }) {
   const history = useHistory();
   const user = JSON.parse(localStorage.getItem("@kenzieHub:user"));
-  const [token] = useState(JSON.parse(localStorage.getItem("@kenzieHub:token")) || "") 
-  const [techs, setTechs] = useState([])
+  const [token] = useState(
+    JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
+  );
 
   if (!authenticated) {
-    return <Redirect to="/Login" />;
+    return <Redirect to="/" />;
   }
 
   // function loadTechs() {
-  //   api.get("/users/techs", {
+  //   api.get("/users/", {
   //     headers: {
   //       Authorization: `Bearer ${token}`,
   //     },
@@ -23,34 +25,46 @@ function Home({ name, modulo, authenticated }) {
   //   .then(response=>setTechs(response));
   // }
 
-  // function addTech(){
-  //   api.post
-  // }
-
   // function removeTech(){
 
   // }
 
+  const logout = () => {
+    localStorage.clear();
+    history.push("/");
+  };
+
   return (
     <div className="container">
       <div className="header">
-        <h3>Kenzie Hub</h3>
+        <h2>Kenzie Hub</h2>
 
-        <button onClick={() => history.push("/")}>Sair</button>
+        <button onClick={logout}>Sair</button>
       </div>
 
       <div className="greetings">
-        <h4>Olá, {user.name}!</h4>
-        <p>{user.course_module}</p>
+        <h3>Olá, {user.name}!</h3>
+        <h3>{user.course_module}</h3>
       </div>
 
       <div className="techs">
-        <div>
+        <div className="techsHeader">
           <h3>Tecnologias</h3>
-          <button>+++</button>
+          <TechModal user={user} />
         </div>
 
-        <div className="techsContainer"></div>
+        <div className="techsContainer">
+          {user.techs.map((tech) => {
+            return (
+              <div>
+                {tech.title}
+                <span>{tech.status}</span>
+              </div>
+            );
+          })}
+
+          <div>aaaaaaa</div>
+        </div>
       </div>
     </div>
   );

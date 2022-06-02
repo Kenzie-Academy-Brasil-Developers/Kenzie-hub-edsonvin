@@ -1,10 +1,10 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import api from "../../services/api";
 import { toast } from "react-toastify";
+import "./style.css";
 
 function Login({ authenticated, setAuthenticated }) {
   const schema = yup.object().shape({
@@ -48,6 +48,7 @@ function Login({ authenticated, setAuthenticated }) {
       <h2>Kenzie Hub</h2>
 
       <div className="form">
+        <h3>Login</h3>
         <form action="login" onSubmit={handleSubmit(loged)}>
           <input type="email" placeholder="e-mail" {...register("email")} />
           <p>{errors.email?.message}</p>
@@ -59,11 +60,12 @@ function Login({ authenticated, setAuthenticated }) {
           />
           <p>{errors.password?.message}</p>
 
-          <button type="submit"></button>
+          <button type="submit">Entrar</button>
         </form>
+
+        <h4>Ainda não possui uma conta?</h4>
+        <button onClick={() => history.push("/Register")}>Cadastre-se</button>
       </div>
-      <h3>Ainda não possui uma conta?</h3>
-      <button onClick={() => history.push("/Register")}>Cadastre-se</button>
     </div>
   );
 }

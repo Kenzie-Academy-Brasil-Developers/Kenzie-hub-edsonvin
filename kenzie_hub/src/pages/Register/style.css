@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  height: max-content;
+  margin-top: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-top: 10px;
+  height: 30px;
+  width: 369px;
+}
+
+.header button {
+  height: 32px;
+  width: 67px;
+  background-color: var(--grey_3);
+}
+
+.header h2 {
+  margin: none;
+}
+
+.text {
+  text-align: center;
+  justify-content: center;
+}
+
+.text p {
+  color: var(--grey_1);
+}
