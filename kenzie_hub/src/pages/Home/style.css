@@ -1,7 +1,19 @@
-.greetings{
-    display: flex;
-    justify-content: space-around;
-    flex-flow: row wrap;
+.greetings {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  margin: 10px 0;
+  width: 770px;
+  padding: 5px 0;
+  /* border-top: 1px solid var(--grey_3);
+  border-bottom: 1px solid var(--grey_3); */
+}
+
+.line {
+  background-color: var(--grey_3);
+  height: 1px;
+  width: 100%;
+  margin: 15px 0;
 }
 
 .techsHeader {
@@ -23,4 +35,30 @@
   border-radius: 3px;
   background-color: var(--grey_3);
   width: 780px;
+  padding: 4px;
+  height: fit-content;
+}
+
+.techsCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  margin: 10px 4px;
+  background-color: var(--grey_4);
+  height: 48px;
+  border-radius: 4px;
+}
+
+.title {
+  margin-left: 5px;
+  color: var(--grey_0);
+  font-size: 17px;
+}
+.status {
+  color: var(--grey_1);
+  font-size: 15px;
+  margin-right: 5px;
+  font-weight: 500;
 }

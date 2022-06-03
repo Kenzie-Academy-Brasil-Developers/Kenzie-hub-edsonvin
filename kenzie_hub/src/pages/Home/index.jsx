@@ -4,6 +4,7 @@ import { useState, useEfect } from "react";
 import api from "../../services/api";
 import "./style.css";
 import TechModal from "../../components/Modal";
+import EditModal from "../../components/EditModal";
 
 function Home({ authenticated }) {
   const history = useHistory();
@@ -14,6 +15,8 @@ function Home({ authenticated }) {
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
   );
+
+  const [techId, setTechId] = useState();
 
   // if (!authenticated) {
   //   return <Redirect to="/" />;
@@ -34,6 +37,12 @@ function Home({ authenticated }) {
   //   .then(response=>setTechs(response));
   // }
 
+  // const editTech = (tech)=>{
+  //   setTechId(tech.id);
+  //   <EditModal techId={techId}/>
+
+  // }
+
   // function removeTech(){
 
   // }
@@ -50,12 +59,12 @@ function Home({ authenticated }) {
 
         <button onClick={logout}>Sair</button>
       </div>
-
+      <p className="line"></p>
       <div className="greetings">
         <h3>Olá, {user.name}!</h3>
         <h3>{user.course_module}</h3>
       </div>
-
+      <p className="line"></p>
       <div className="techs">
         <div className="techsHeader">
           <h3>Tecnologias</h3>
@@ -65,14 +74,12 @@ function Home({ authenticated }) {
         <div className="techsContainer">
           {user.techs.map((tech) => {
             return (
-              <div key={tech.title}>
-                <h4>{tech.title}</h4>
-                <h4>{tech.status}</h4>
+              <div className="techsCard" key={tech.title}>
+                <h4 className="title">{tech.title}</h4>
+                <h4 className="status">{tech.status}</h4>
               </div>
             );
           })}
-
-          <div>aaaaaaa</div>
         </div>
       </div>
     </div>
