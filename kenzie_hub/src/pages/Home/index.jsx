@@ -7,14 +7,23 @@ import TechModal from "../../components/Modal";
 
 function Home({ authenticated }) {
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem("@kenzieHub:user"));
-  const [token] = useState(
+
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("@kenzieHub:user"))
+  );
+  const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
   );
 
-  if (!authenticated) {
-    return <Redirect to="/" />;
-  }
+  // if (!authenticated) {
+  //   return <Redirect to="/" />;
+  // }
+
+  const att = () => {
+    api
+      .get(`/users/${user.id}`)
+      .then(JSON.parse(localStorage.getItem("@kenzieHub:user")));
+  };
 
   // function loadTechs() {
   //   api.get("/users/", {
@@ -56,9 +65,9 @@ function Home({ authenticated }) {
         <div className="techsContainer">
           {user.techs.map((tech) => {
             return (
-              <div>
-                {tech.title}
-                <span>{tech.status}</span>
+              <div key={tech.title}>
+                <h4>{tech.title}</h4>
+                <h4>{tech.status}</h4>
               </div>
             );
           })}

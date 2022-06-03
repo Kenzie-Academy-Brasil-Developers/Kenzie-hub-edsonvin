@@ -22,11 +22,12 @@ const style = {
 };
 
 const TechModal = (user) => {
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem("@kenzieHub:token"))
+  );
+
   const schema = yup.object().shape({
-    title: yup
-      .string()
-      .required("Tecnologia obrigatória")
-      .matches(/[a-z]/gi, "Apenas letras!"),
+    title: yup.string().required("Tecnologia obrigatória"),
     status: yup.string().required("Nivel obrigatório!"),
   });
 
@@ -38,10 +39,15 @@ const TechModal = (user) => {
     resolver: yupResolver(schema),
   });
 
-  const confirm = (data) => {
-    return api.post("/users/techs", data).then((response) => {
-      console.log(response);
-    });
+  const newTech = (data) => {
+    console.log("aaa");
+    api
+      .post("/users/techs", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch(console.log("erro"));
   };
 
   const [open, setOpen] = useState(false);
@@ -62,7 +68,7 @@ const TechModal = (user) => {
         <Box sx={style} component="form">
           <h4>Cadastrar tecnologia</h4>
 
-          <div>
+          <form onSubmit={handleSubmit(newTech)}>
             <input placeholder="Nome da tech" {...register("title")}></input>
             <p>{errors.title?.message}</p>
 
@@ -74,7 +80,7 @@ const TechModal = (user) => {
             <p>{errors.status?.message}</p>
 
             <button type="submit">Confirmar</button>
-          </div>
+          </form>
         </Box>
       </Modal>
     </div>
