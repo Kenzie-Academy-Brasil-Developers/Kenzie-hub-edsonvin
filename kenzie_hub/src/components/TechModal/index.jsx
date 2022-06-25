@@ -21,10 +21,8 @@ const style = {
   p: 4,
 };
 
-const TechModal = (user) => {
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem("@kenzieHub:token"))
-  );
+const TechModal = ({ user, userId, token, setUser }) => {
+  console.log(token);
 
   const schema = yup.object().shape({
     title: yup.string().required("Tecnologia obrigatória"),
@@ -40,14 +38,20 @@ const TechModal = (user) => {
   });
 
   const newTech = (data) => {
-    console.log("aaa");
+    console.log(data);
+    console.log(token);
+
     api
       .post("/users/techs", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .catch(console.log("erro"));
+      .then(() => {
+        api.get(`/users/${userId}`).then((response) => setUser(response.data));
+        handleClose();
+      })
+      .catch(() => console.log("erro"));
   };
 
   const [open, setOpen] = useState(false);
@@ -65,7 +69,7 @@ const TechModal = (user) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} component="form">
+        <Box sx={style} component="div">
           <h4>Cadastrar tecnologia</h4>
 
           <form onSubmit={handleSubmit(newTech)}>

@@ -110,10 +110,10 @@ function Register({ authenticated }) {
 
           <label for="module">Selecione seu módulo:</label>
           <select name="module" {...register("course_module")}>
-            <option value="M1">1º Módulo</option>
-            <option value="M2">2º Módulo</option>
-            <option value="M3">3º Módulo</option>
-            <option value="M4">4º Módulo</option>
+            <option value="Primeiro módulo">1º Módulo</option>
+            <option value="Segundo Módulo">2º Módulo</option>
+            <option value="Terceiro módulo">3º Módulo</option>
+            <option value="Quarto módulo">4º Módulo</option>
           </select>
 
           <p>{errors.confirmation?.message}</p>

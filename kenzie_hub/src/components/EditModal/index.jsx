@@ -21,11 +21,16 @@ const style = {
   p: 4,
 };
 
-const EditModal = (techId) => {
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem("@kenzieHub:token"))
-  );
-
+const EditModal = ({
+  techId,
+  techTitle,
+  techStatus,
+  open,
+  handleClose,
+  setUser,
+  userId,
+  token,
+}) => {
   const schema = yup.object().shape({
     title: yup.string().required("Tecnologia obrigatória"),
     status: yup.string().required("Nivel obrigatório!"),
@@ -47,44 +52,56 @@ const EditModal = (techId) => {
           Authorization: `Bearer ${token}`,
         },
       })
+      .then(() => {
+        api.get(`/users/${userId}`).then((response) => setUser(response.data));
+        handleClose();
+      })
       .catch(console.log("erro"));
   };
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const removeTech = () => {
+    api
+      .delete(`/users/techs/${techId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        api.get(`/users/${userId}`).then((response) => setUser(response.data));
+        handleClose();
+      });
+  };
 
   return (
-    <div>
-      <Button className="addTechs" onClick={handleOpen}>
-        <h4>+</h4>
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style} component="form">
-          <h4>Cadastrar tecnologia</h4>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <h4>Editar tecnologia</h4>
 
-          <form onSubmit={handleSubmit(update)}>
-            <input placeholder="Nome da tech" {...register("title")}></input>
-            <p>{errors.title?.message}</p>
+        <form onSubmit={handleSubmit(update)}>
+          <input
+            value={techTitle}
+            placeholder="Nome da tech"
+            {...register("title")}
+          ></input>
+          <p>{errors.title?.message}</p>
 
-            <select {...register("status")}>
-              <option>Iniciante</option>
-              <option>Intermediário</option>
-              <option>Avançado</option>
-            </select>
-            <p>{errors.status?.message}</p>
+          <select value={techStatus} {...register("status")}>
+            <option>Iniciante</option>
+            <option>Intermediário</option>
+            <option>Avançado</option>
+          </select>
+          <p>{errors.status?.message}</p>
 
-            <button type="submit">Confirmar</button>
-            <button>Excluir</button>
-          </form>
-        </Box>
-      </Modal>
-    </div>
+          <button type="submit">Confirmar</button>
+          <button onClick={removeTech}>Excluir</button>
+        </form>
+      </Box>
+    </Modal>
   );
 };
 

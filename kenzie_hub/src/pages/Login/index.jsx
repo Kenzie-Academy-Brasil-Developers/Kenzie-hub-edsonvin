@@ -6,7 +6,7 @@ import api from "../../services/api";
 import { toast } from "react-toastify";
 import "./style.css";
 
-function Login({ authenticated, setAuthenticated }) {
+function Login({ authenticated, setAuthenticated, setUser, setToken }) {
   const schema = yup.object().shape({
     email: yup.string().required("Email obrigatório!").email("email inválido!"),
     password: yup.string().required("Senha obrigatória!"),
@@ -30,7 +30,13 @@ function Login({ authenticated, setAuthenticated }) {
         localStorage.setItem("@kenzieHub:token", JSON.stringify(token));
         localStorage.setItem("@kenzieHub:user", JSON.stringify(user));
 
+        setUser(user);
+        setToken(token);
+
         setAuthenticated(true);
+
+        console.log(token);
+        console.log(user);
 
         return history.push("/Home");
       })

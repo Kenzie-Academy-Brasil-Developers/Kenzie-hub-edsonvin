@@ -6,14 +6,18 @@ import { useState, useEffect } from "react";
 
 function Routes() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("@kenzieHub:user")) || {}
+  );
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
+  );
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("@kenzieHub:token"));
-
     if (token) {
       return setAuthenticated(true);
     }
-  }, [authenticated]);
+  }, []);
 
   return (
     <Switch>
@@ -21,6 +25,8 @@ function Routes() {
         <Login
           authenticated={authenticated}
           setAuthenticated={setAuthenticated}
+          setToken={setToken}
+          setUser={setUser}
         />
       </Route>
 
@@ -29,7 +35,13 @@ function Routes() {
       </Route>
 
       <Route exact path="/Home">
-        <Home authenticated={authenticated} />
+        <Home
+          authenticated={authenticated}
+          setToken={setToken}
+          setUser={setUser}
+          token={token}
+          user={user}
+        />
       </Route>
     </Switch>
   );

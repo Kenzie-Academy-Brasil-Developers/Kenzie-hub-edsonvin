@@ -3,49 +3,17 @@ import { Redirect } from "react-router-dom";
 import { useState, useEfect } from "react";
 import api from "../../services/api";
 import "./style.css";
-import TechModal from "../../components/Modal";
-import EditModal from "../../components/EditModal";
+import TechModal from "../../components/TechModal";
+import CardTech from "../../components/cardTech";
 
-function Home({ authenticated }) {
+function Home({ setToken, setUser, user, token }) {
   const history = useHistory();
 
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("@kenzieHub:user"))
-  );
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
-  );
-
-  const [techId, setTechId] = useState();
-
-  // if (!authenticated) {
-  //   return <Redirect to="/" />;
-  // }
-
   const att = () => {
-    api
-      .get(`/users/${user.id}`)
-      .then(JSON.parse(localStorage.getItem("@kenzieHub:user")));
+    api.get(`/users/${user.id}`).then((response) => setUser(response.data));
   };
 
-  // function loadTechs() {
-  //   api.get("/users/", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //   .then(response=>setTechs(response));
-  // }
-
-  // const editTech = (tech)=>{
-  //   setTechId(tech.id);
-  //   <EditModal techId={techId}/>
-
-  // }
-
-  // function removeTech(){
-
-  // }
+  att();
 
   const logout = () => {
     localStorage.clear();
@@ -68,16 +36,25 @@ function Home({ authenticated }) {
       <div className="techs">
         <div className="techsHeader">
           <h3>Tecnologias</h3>
-          <TechModal user={user} />
+          <TechModal
+            user={user}
+            setUser={setUser}
+            token={token}
+            setToken={setToken}
+            userId={user.id}
+          />
         </div>
 
         <div className="techsContainer">
           {user.techs.map((tech) => {
             return (
-              <div className="techsCard" key={tech.title}>
-                <h4 className="title">{tech.title}</h4>
-                <h4 className="status">{tech.status}</h4>
-              </div>
+              <CardTech
+                techTitle={tech.title}
+                techStatus={tech.status}
+                techId={tech.id}
+                userId={user.id}
+                token={token}
+              />
             );
           })}
         </div>
