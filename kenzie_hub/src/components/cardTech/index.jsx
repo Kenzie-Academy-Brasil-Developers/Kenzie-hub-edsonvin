@@ -7,7 +7,7 @@ const CardTech = ({ techTitle, techStatus, techId, token, user, userId, setUser 
   const handleClose = () => setOpen(false);
 
   return (
-    <div onClick={handleOpen} c className="techsCard" key={techTitle}>
+    <div onClick={handleOpen} className="techsCard" key={techTitle}>
       <h4 className="title">{techTitle}</h4>
       <h4 className="status">{techStatus}</h4>
       <EditModal

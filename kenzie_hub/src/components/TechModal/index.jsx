@@ -22,7 +22,6 @@ const style = {
 };
 
 const TechModal = ({ user, userId, token, setUser }) => {
-  console.log(token);
 
   const schema = yup.object().shape({
     title: yup.string().required("Tecnologia obrigatória"),
@@ -38,8 +37,6 @@ const TechModal = ({ user, userId, token, setUser }) => {
   });
 
   const newTech = (data) => {
-    console.log(data);
-    console.log(token);
 
     api
       .post("/users/techs", data, {

@@ -45,7 +45,6 @@ const EditModal = ({
   });
 
   const update = (data) => {
-    console.log("aaa");
     api
       .put(`/users/techs/${techId}`, data, {
         headers: {
@@ -69,7 +68,8 @@ const EditModal = ({
       .then(() => {
         api.get(`/users/${userId}`).then((response) => setUser(response.data));
         handleClose();
-      });
+      })
+      .catch(console.log("erro"));
   };
 
   return (
@@ -90,7 +90,7 @@ const EditModal = ({
           ></input>
           <p>{errors.title?.message}</p>
 
-          <select value={techStatus} {...register("status")}>
+          <select defaultValue={techStatus} {...register("status")}>
             <option>Iniciante</option>
             <option>Intermediário</option>
             <option>Avançado</option>

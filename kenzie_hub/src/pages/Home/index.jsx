@@ -54,6 +54,7 @@ function Home({ setToken, setUser, user, token }) {
                 techId={tech.id}
                 userId={user.id}
                 token={token}
+                setUser={setUser}
               />
             );
           })}
